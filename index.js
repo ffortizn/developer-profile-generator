@@ -17,7 +17,7 @@ const inquirer = require('inquirer');
 const axios = require('axios');
 //const util = require('util');
 const pdf = require('pdf-creator-node');
-const PDFDocument = require('pdfkit');
+// const PDFDocument = require('pdfkit');
 const fs = require('fs');
 
 // Object to save application state
@@ -25,7 +25,7 @@ const app = {
     color: 'orange',
     username: 'ffortizn',
     login: '',
-    imageUrl: '',
+    imageUrl: 'https://avatars0.githubusercontent.com/u/2782134?v=4',
     name: 'Fernando Nicolas',
     location: '',
     gitProfileUrl: '',
@@ -88,6 +88,7 @@ function askQuestions() {
             app.color = answers.color;
             app.username = answers.username;
             getGitProfile();
+            // generatePdf();
         });
 }
 
@@ -110,7 +111,7 @@ function getGitProfile() {
 }
 
 function getGitStars() {
-    const queryUrl = `https://api.github.com/users/${app.username}/repos?per_page=1000`;
+    const queryUrl = `https://api.github.com/users/${app.username}/repos?per_page=100`;
     axios
         .get(queryUrl)
         .then(function (res) {
@@ -123,8 +124,6 @@ function getGitStars() {
             generatePdf();
         });
 }
-
-
 
 function generatePdf() {
     var html = fs.readFileSync('template.html', 'utf8');
@@ -166,8 +165,7 @@ function generatePdf() {
 }
 
 askQuestions();
-// getColor();
-// getUsername();
+//generatePdf();
 //printApp();
 
 
