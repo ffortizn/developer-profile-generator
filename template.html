@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profile Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
+</head>
+
+<body>
+    <div>
+        <p></p>
+    </div>
+    <div class="container text-center" id="page" >
+        <div id="imageUrl">
+            <img src="{{imageUrl}}" width="200">
+            <!-- <img src='https://avatars0.githubusercontent.com/u/2782134?v=4' width="200"> -->
+        </div>
+        <br><br>
+        <div id="presentation">
+            <h2>Hi!</h2>
+            <h3>My name is {{app.name}}</h3>
+            Currently at: {{app.location}}
+            My Blog: {{app.blog}}
+        </div>
+        <br><br>
+        <div>
+            <h2>Bio</h2>
+            <h4>{{app.bio}}</h4>
+        </div>
+        <div>
+            <h2>I am learning code! :)</h2>
+        </div>
+        <br><br>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-3" style="background-color: {{app.color}}" id="repositories">Repositories<br>{{app.publicRepos}}</div>
+            <div class="col-md-2"></div>
+            <div class="col-md-3" style="background-color: {{app.color}}" id="followers">Followers<br>{{app.followers}}</div>
+            <div class="col-md-2"></div>
+        </div>
+        <br><br>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-3" style="background-color: {{app.color}}" id="stars">Stars<br>{{app.stars}}</div>
+            <div class="col-md-2"></div>
+            <div class="col-md-3" style="background-color: {{app.color}}" id="following">Following<br>{{app.following}}</div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+</body>
+
+</html>

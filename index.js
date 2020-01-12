@@ -17,6 +17,7 @@ const inquirer = require('inquirer');
 const axios = require('axios');
 //const util = require('util');
 const pdf = require('pdf-creator-node');
+const PDFDocument = require('pdfkit');
 const fs = require('fs');
 
 // Object to save application state
@@ -26,13 +27,14 @@ const app = {
     login: '',
     imageUrl: '',
     name: 'Fernando Nicolas',
-    locationUrl: '',
+    location: '',
     gitProfileUrl: '',
     blog: '',
     bio: '',
     publicRepos: 0,
     followers: 0,
     stars: 0,
+    following: 0
 };
 
 // ask for color
@@ -97,12 +99,12 @@ function getGitProfile() {
             app.login = res.data.login;
             app.imageUrl = res.data.avatar_url;
             app.name = res.data.name;
-            app.locationUrl = res.data.location,
-            app.gitProfileUrl = res.data.html_url,
-            app.blog = res.data.blog,
-            app.bio = res.data.bio,
-            app.publicRepos = res.data.public_repos,
-            app.followers = res.data.followers;
+            app.location = res.data.location,
+                app.gitProfileUrl = res.data.html_url,
+                app.blog = res.data.blog,
+                app.bio = res.data.bio,
+                app.publicRepos = res.data.public_repos,
+                app.followers = res.data.followers;
             getGitStars();
         });
 }
@@ -118,10 +120,50 @@ function getGitStars() {
                 stars += parseInt(element.stargazers_count);
             });
             app.stars = stars;
-            printApp();
-        });        
+            generatePdf();
+        });
 }
 
+
+
+function generatePdf() {
+    var html = fs.readFileSync('template.html', 'utf8');
+    var options = {
+        format: "A2",
+        orientation: "portrait",
+        border: "10mm",
+        // header: {
+        //     height: "45mm",
+        //     contents: '<div style="text-align: center;">Author: Francisco Ortiz</div>'
+        // },
+        // "footer": {
+        //     "height": "28mm",
+        //     "contents": {
+        //         first: 'Cover page',
+        //         2: 'Second page', // Any page number is working. 1-based index
+        //         default: '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>', // fallback value
+        //         last: 'Last Page'
+        //     }
+        // }
+    }
+
+    var document = {
+        html: html,
+        data: {
+            app: app
+        },
+        path: "./output.pdf"
+    };
+
+    pdf.create(document, options)
+        .then(res => {
+            console.log(res)
+        })
+        .catch(error => {
+            console.error(error)
+        });
+    printApp();
+}
 
 askQuestions();
 // getColor();
